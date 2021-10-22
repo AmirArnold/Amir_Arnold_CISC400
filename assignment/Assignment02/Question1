@@ -1,0 +1,86 @@
+        <!DOCTYPE html>
+        <html>
+        
+        <head>
+          <title>Draw a point at the origin of the canvas the point should translate to the two corners of the
+            canvas using the sine or cosine function, you should update the position of this point every
+            second.
+            </title>
+            <script >
+
+
+
+              function wave() {
+                    var canvas = document.getElementById("canvas");
+                    var gl = canvas.getContext("2d");
+        
+                    gl.clearRect(0, 0, 600, 600);
+                    Axes(gl);
+                    gl.save();            
+                    Sine(gl, count, 100);
+                    gl.restore();
+                    count += 2;
+                    window.requestAnimationFrame(wave);
+                }
+               
+                function drawPoint(gl, y) {            
+                    var radius = 3;
+                    gl.beginPath();
+                    gl.fill();
+                    gl.stroke();
+                }
+                function Sine(gl, x, y) {
+                    var w = gl.canvas.width;
+                    var h = gl.canvas.height;
+                    var s = 10;
+                    gl.beginPath();
+                    gl.lineWidth = 0;
+                    gl.strokeStyle = "red";
+
+                    var x_axis = 2;
+                    var y_axis = 0;
+                    var cos = 150;
+                    var sin = 20;
+                    gl.moveTo(x_axis , 50);
+                    while (x_axis  < w) {
+                        y_axis = h/2 + cos* Math.sin((x_axis+x)/sin);
+                        gl.lineTo(x_axis, y_axis);
+                        x_axis++;
+                    }
+                    gl.stroke();
+                    gl.save();
+                    drawPoint(gl, y_axis);
+                    gl.stroke();
+                    gl.restore();
+                }
+                function Axes(gl,axis) {
+                    var w = gl.canvas.width;
+                    var h = gl.canvas.height;
+                    var min = 0;
+                    
+                    gl.beginPath();
+                    gl.strokeStyle = "white";
+                    gl.lineTo(w, h/2);
+                    gl.moveTo(w/2, 0);
+                    gl.lineTo(w/2, h);
+                    gl.moveTo(0, 0);
+                    gl.moveTo(min, h/2);
+                    gl.lineTo(0, h);
+                    gl.stroke();
+                }
+                
+                
+                function init() {
+                    window.requestAnimationFrame(wave);
+                }
+                var count = -2;
+            </script>
+        </head>
+        
+        <body onload="init()">
+            <canvas id="canvas" style="border: 1px solid black;" width="100" height="300"></canvas>
+            
+      
+        </body>
+        </html>
+        
