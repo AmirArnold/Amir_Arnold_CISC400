@@ -1,0 +1,100 @@
+<html>
+<head>
+    <title>Drawing a circle that moves in a random direction</title>
+</head>
+<style type="text/css">
+    #Canvas { background:red; border:1px solid black; }
+    </style>
+<body>
+    <canvas id="Canvas" width="500" height="540"></canvas>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec2 a_center;
+        attribute float a_radius;
+      
+        varying vec2 ce_ter;
+        varying vec2 re_ution;
+        varying float ra_ius;
+         
+        void main() {
+          vec2 space = position / res_ution * 2.0 - 1.0;
+          gl_Position = vec4(space * vec2(1, -1), 0, 1);
+      
+          ra_ius = a_radius;
+          ce_ter = a_center;
+          res_ution = u_resolution;
+        }
+      </script>
+       
+      <script id="fragment-shader" type="x-shader/x-fragment">
+      
+        precision mediump float;
+      
+        varying vec2 center;
+        varying vec2 resolution;
+        varying float radius;
+      
+        void main() {
+          vec4 color0 = vec4(0.0, 0.0, 0.0, 0.0);
+      
+          float x = gl_FragCoord.x;
+          float y = resolution[1] - gl_FragCoord.y;
+      
+          float dx_axis = center[0] - x_axis;
+          float dy_axis = center[1] - y_axis;
+        }
+      </script>
+      
+<script type="text/javascript">
+   function onLoad () {
+    var mycanvas = document.getElementById("canvas");
+    var gl;
+    var dx_axis= 2;
+    var dy_axis=2;
+    var y_axis=300;
+    var x_axis=20;
+function Circle_(){
+	gl= Canvas.getContext('2d');
+	gl.clearRect(0,0,500,540);
+	gl.beginPath();
+	gl.fillStyle="black";
+	gl.arc(x_axis,y_axis,20,0,Math.PI*2,true);
+	gl.closePath();
+	gl.fill();
+	if( x_axis<0 || x_axis>500)
+	dx_axis=-dx_axis;
+	if( y_axis<0 || y_axis>540)
+		dy_axis=-dy_axis;
+		x_axis+=dx_axis;
+		y_axis+=dy_axis;
+	}
+setInterval(Circle_,20);
+  var bu_fer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, bu_fer);
+  gl.bufferData(
+      gl.ARRAY_BUFFER, 
+      dataBuffer,
+      gl.STATIC_DRAW);
+
+  var r_Location = gl.getUniformLocation(p_Node, "u_resolution");
+  gl.uniform2f(r_Location, canvas.width, canvas.height);
+
+  var p_Location = gl.getAttribLocation(p_Node, "a_position");
+  var c_Location = gl.getAttribLocation(p_Node, "a_center");
+  var r_Location = gl.getAttribLocation(p_Node, "a_radius");
+
+  
+  gl.enableVertexAttribArray(p_Location);
+  gl.enableVertexAttribArray(c_Location);
+  gl.enableVertexAttribArray(r_Location);
+  gl.vertexAttribPointer(c_Location, 2, gl.FLOAT, false, ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 8);
+  gl.vertexAttribPointer(r_Location, 1, gl.FLOAT, false, ATTRIBUTES * Float32Array.BYTES_PER_ELEMENT, 16);
+
+}
+onLoad();
+</script>      
+<canvas id="mycanvas">
+    Your browser does not support the Canvas.
+</canvas>
+
+</body>
+</html>
